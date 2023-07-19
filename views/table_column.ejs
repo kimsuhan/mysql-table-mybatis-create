@@ -60,7 +60,7 @@
     <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
     <div style="background-color: black; color: white">Insert</div>
     <textarea style="height: 500px; width: 500px">
-      <insert id="insert_<%=snakeToCamel(table_name)%>" parmeterType="OOO_DTO">
+      <insert id="insert_<%=snakeToCamel(table_name)%>" parameterType="OOO_DTO">
         INSERT INTO <%=table_name%> (
         <trim suffixOverrides="," >
         <% for ( var i = 0; i < data.length; i++){ %>
