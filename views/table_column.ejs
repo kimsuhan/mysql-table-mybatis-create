@@ -39,12 +39,8 @@
     <textarea style="height: 500px; width: 500px">
       @Data
       public class OOO_DTO {
-        
-        
-        <% for ( var i = 0; i < data.length; i++){ %>
-          private <%=dataTypeToClass(data[i].DATA_TYPE)%> <%=snakeToCamel(data[i].COLUMN_NAME)%>; // <%=data[i].COLUMN_COMMENT%>
-        <% }%>
-      }
+        <% for ( var i = 0; i < data.length; i++){ %> private <%=dataTypeToClass(data[i].DATA_TYPE)%> <%=snakeToCamel(data[i].COLUMN_NAME)%>; // <%=data[i].COLUMN_COMMENT%>
+        <% }%>}
     </textarea>
 
     <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
@@ -62,21 +58,15 @@
     <textarea style="height: 500px; width: 500px">
       <insert id="insert_<%=snakeToCamel(table_name)%>" parameterType="OOO_DTO">
         INSERT INTO <%=table_name%> (
-        <trim suffixOverrides="," >
-        <% for ( var i = 0; i < data.length; i++){ %>
-          <% if(data[i].IS_NULLABLE == 'YES'){%> <if test="<%=snakeToCamel(data[i].COLUMN_NAME)%> != null"><%}%>
+        <trim suffixOverrides="," ><% for ( var i = 0; i < data.length; i++){ %><% if(data[i].IS_NULLABLE == 'YES'){%><if test="<%=snakeToCamel(data[i].COLUMN_NAME)%> != null"><%}%>
             <%=data[i].COLUMN_NAME%>,
-          <% if(data[i].IS_NULLABLE == 'YES'){%> </if><%}%>
-          <% }%>
-        </trim>
+          <% if(data[i].IS_NULLABLE == 'YES'){%></if><%}%>
+          <% }%></trim>
         ) VALUES (
-        <trim suffixOverrides=",">
-        <% for ( var i = 0; i < data.length; i++){ %>
-          <% if(data[i].IS_NULLABLE == 'YES'){%> <if test="<%=snakeToCamel(data[i].COLUMN_NAME)%> != null"><%}%>
+        <trim suffixOverrides=","><% for ( var i = 0; i < data.length; i++){ %><% if(data[i].IS_NULLABLE == 'YES'){%><if test="<%=snakeToCamel(data[i].COLUMN_NAME)%> != null"><%}%>
             #{<%=snakeToCamel(data[i].COLUMN_NAME)%>},
-          <% if(data[i].IS_NULLABLE == 'YES'){%> </if><%}%>
-          <% }%>
-        </trim>
+          <% if(data[i].IS_NULLABLE == 'YES'){%></if><%}%>
+          <% }%></trim>
         )
       </insert>
     </textarea>
