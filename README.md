@@ -39,6 +39,7 @@ Mybatis에 Mapper, DTO를 손으로 만들기 귀찮아서 휘리릭 만듬
    ```
 4. Create your Enviroment in `.env`
    ```env
+   PORT={port}
    DB_HOST={host}
    DB_PORT={port}
    DB_USER={user}
