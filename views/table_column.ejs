@@ -15,13 +15,13 @@
     <% 
     function dataTypeToClass(dataType) {
       if(dataType == 'int' || dataType == 'tinyint'){
-        return 'int';
+        return 'Integer';
       }
       else if(dataType == 'varchar'){
         return 'String';
       }
       else if(dataType == 'datetime' || dataType == 'timestamp' || dataType == 'date') {
-        return 'Date';
+        return 'LocalDateTime';
       }
       else if(dataType == 'bigint') {
         return 'long';
