@@ -76,12 +76,10 @@
     <textarea style="height: 500px; width: 500px">
       <update id="update_<%=snakeToCamel(table_name)%>" parmeterType="OOO_DTO">
         UPDATE <%=table_name%> SET
-        <trim suffixOverrides=",">
-        <% for ( var i = 0; i < data.length; i++){ %>
-          <% if(data[i].IS_NULLABLE == 'YES'){%> <if test="<%=snakeToCamel(data[i].COLUMN_NAME)%> != null"><%}%>
+        <trim suffixOverrides=","><% for ( var i = 0; i < data.length; i++){ %>
+         <% if(data[i].IS_NULLABLE == 'YES'){%> <if test="<%=snakeToCamel(data[i].COLUMN_NAME)%> != null"><%}%>
             <%=data[i].COLUMN_NAME%> = #{<%=snakeToCamel(data[i].COLUMN_NAME)%>},
-          <% if(data[i].IS_NULLABLE == 'YES'){%> </if><%}%>
-          <% }%>
+         <% if(data[i].IS_NULLABLE == 'YES'){%> </if><%}%><% }%>
         </trim>
         WHERE <%=data[0].COLUMN_NAME%> = #{<%=snakeToCamel(data[0].COLUMN_NAME)%>}
       </update>
