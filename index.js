@@ -4,7 +4,6 @@ import dotenv from "dotenv";
 import { connection } from "./src/config/db.js";
 
 
-dotenv.config();
 const app = express();
 const __dirname = path.resolve();
 
@@ -44,6 +43,7 @@ app.get("/tables/:table_name", (req, res) => {
   );
 });
 
-app.listen(process.env.port, () => {
-  console.log("Server is running on port 3000");
+dotenv.config();
+app.listen(process.env.PORT, () => {
+  console.log(`Server is running on port ${process.env.PORT}`);
 });
