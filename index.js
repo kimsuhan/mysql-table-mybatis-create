@@ -1,7 +1,7 @@
 import express from "express";
 import path from "path";
 import dotenv from "dotenv";
-import { connection } from "./src/config/db.js";
+import { query } from "./src/config/db.js";
 
 
 const app = express();
@@ -11,39 +11,24 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "./views"));
 
 app.get("/", (req, res) => {
-  res.render("index");
+  res.redirect("/tables");
 });
 
-/**
- *
- */
-app.get("/tables", (req, res) => {
-  connection.query(
-    `SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = '${process.env.DB_USER}'`,
-    (error, rows, fields) => {
-      if (error) throw error;
-      res.render("tables", { data: rows });
-    }
-  );
+app.get("/tables", async (req, res) => {
+  const result = await query(`SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = '${process.env.DB_USER}'`);
+  res.render("tables", { data: result });
 });
 
-/**
- *
- */
-app.get("/tables/:table_name", (req, res) => {
-  connection.query(
-    `SELECT COLUMN_NAME, IS_NULLABLE, COLUMN_DEFAULT, DATA_TYPE, CHARACTER_MAXIMUM_LENGTH, COLUMN_COMMENT FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '${process.env.DB_USER}' AND TABLE_NAME = '${req.params.table_name}'`,
-    (error, rows, fields) => {
-      if (error) throw error;
-      res.render("table_column", {
-        data: rows,
-        table_name: req.params.table_name,
-      });
-    }
-  );
+app.get("/tables/:table_name", async (req, res) => {
+  const result = await query( `SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '${process.env.DB_USER}' AND TABLE_NAME = '${req.params.table_name}'`);
+  console.log(result);
+  res.render("table_column", {
+    data: result,
+    table_name: req.params.table_name,
+  });
 });
 
 dotenv.config();
-app.listen(process.env.PORT, () => {
+app.listen(process.env.PORT, () => { 
   console.log(`Server is running on port ${process.env.PORT}`);
 });

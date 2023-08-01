@@ -35,10 +35,28 @@
     }
     %>
     <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+    <div style="background-color: black; color: white">Entity</div>
+    <div>
+      @Data <br>
+      @Entity  <br>
+      @Table(name = "<%=table_name.toUpperCase()%>") <br>
+      public class <%=snakeToCamel(table_name.toUpperCase()).substr(1) + 'Entity'%> {  <br>
+        <% for ( var i = 0; i < data.length; i++){ %> 
+        <%if (data[i].COLUMN_KEY == 'PRI'){%> &nbsp;&nbsp;&nbsp;@Id <br> <%}%>
+        <%if (data[i].EXTRA == 'auto_increment'){%> &nbsp;&nbsp;&nbsp;@GeneratedValue(strategy = GenerationType.IDENTITY) <br> <%}%>
+        &nbsp;&nbsp; @Column
+        <%if (data[i].DATA_TYPE == 'tinyint'){%> (columnDefinition = "BIT", length = 1) <%}%>
+        <%if (data[i].IS_NULLABLE == 'NO'){%> (nullable = false) <%}%>
+        <br>
+        &nbsp;&nbsp; private <%=dataTypeToClass(data[i].DATA_TYPE)%> <%=snakeToCamel(data[i].COLUMN_NAME)%>; // <%=data[i].COLUMN_COMMENT%>  <br><br>
+        <% }%>}  <br>
+        </div>
+    
+    <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
     <div style="background-color: black; color: white">DTO</div>
     <textarea style="height: 500px; width: 500px">
       @Data
-      public class OOO_DTO {
+      public class <%=snakeToCamel(table_name.toUpperCase()).substr(1) + 'DTO'%> {
         <% for ( var i = 0; i < data.length; i++){ %> private <%=dataTypeToClass(data[i].DATA_TYPE)%> <%=snakeToCamel(data[i].COLUMN_NAME)%>; // <%=data[i].COLUMN_COMMENT%>
         <% }%>}
     </textarea>

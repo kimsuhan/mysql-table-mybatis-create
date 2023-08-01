@@ -1,25 +1,20 @@
-import mysql from "mysql";
+import mysql from "mysql2/promise";
 import dotenv from "dotenv";
+
 dotenv.config();
-export const connection = mysql.createConnection({
+console.log(process.env.DB_HOST);
+const connection = await mysql.createConnection({
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
-  database: process.env.DB_USER,
+  database: process.env.DB_NAME,
 });
 
-
-// export function dbConnect() {
-//   const connection = mysql.createConnection({
-//     host: "localhost",
-//     user: "< MySQL username >",
-//     password: "< MySQL password >",
-//     database: "my_db",
-//   });
-
-//   connection.connect();
-// }
+export async function query(query) {
+  let [rows, fields] = await connection.query(query); 
+  return rows;
+}
 
 // connection.query("SELECT * from Users", (error, rows, fields) => {
 //   if (error) throw error;
