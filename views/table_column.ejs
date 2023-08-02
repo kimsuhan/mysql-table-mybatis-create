@@ -37,16 +37,20 @@
     <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
     <div style="background-color: black; color: white">Entity</div>
     <div>
+
+import javax.persistence.*;<br>
+import javax.validation.constraints.NotNull;<br><br>
+
       @Data <br>
       @Entity  <br>
       @Table(name = "<%=table_name.toUpperCase()%>") <br>
-      public class <%=snakeToCamel(table_name.toUpperCase()).substr(1) + 'Entity'%> {  <br>
+      public class <%=snakeToCamel(table_name.toUpperCase()).substr(1)%> {  <br>
         <% for ( var i = 0; i < data.length; i++){ %> 
         <%if (data[i].COLUMN_KEY == 'PRI'){%> &nbsp;&nbsp;&nbsp;@Id <br> <%}%>
         <%if (data[i].EXTRA == 'auto_increment'){%> &nbsp;&nbsp;&nbsp;@GeneratedValue(strategy = GenerationType.IDENTITY) <br> <%}%>
+        &nbsp;&nbsp;<%if (data[i].IS_NULLABLE == 'NO'){%> @NotNull <%}%><br>
         &nbsp;&nbsp; @Column
         <%if (data[i].DATA_TYPE == 'tinyint'){%> (columnDefinition = "BIT", length = 1) <%}%>
-        <%if (data[i].IS_NULLABLE == 'NO'){%> (nullable = false) <%}%>
         <br>
         &nbsp;&nbsp; private <%=dataTypeToClass(data[i].DATA_TYPE)%> <%=snakeToCamel(data[i].COLUMN_NAME)%>; // <%=data[i].COLUMN_COMMENT%>  <br><br>
         <% }%>}  <br>
