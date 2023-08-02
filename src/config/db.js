@@ -2,17 +2,18 @@ import mysql from "mysql2/promise";
 import dotenv from "dotenv";
 
 dotenv.config();
-console.log(process.env.DB_HOST);
-const connection = await mysql.createConnection({
+const dbOption = {
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-});
+};
 
 export async function query(query) {
+  const connection = await mysql.createConnection(dbOption);
   let [rows, fields] = await connection.query(query); 
+  connection.destroy();
   return rows;
 }
 
