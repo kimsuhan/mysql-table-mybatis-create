@@ -72,7 +72,7 @@ import javax.validation.constraints.NotNull;<br><br>
     <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
     <div style="background-color: black; color: white">Select</div>
     <textarea style="height: 500px; width: 500px">
-      <select id="select_<%=snakeToCamel(table_name)%>" resultType="OOO_DTO">
+      <select id="select_<%=snakeToCamel(table_name)%>" resultType="ParamMap">
         SELECT <% for ( var i = 0; i < data.length; i++){ %>
           <%=data[i].COLUMN_NAME%> <% if(i != data.length - 1){%>,<%}%><% }%>
         FROM <%=table_name%>
@@ -82,14 +82,14 @@ import javax.validation.constraints.NotNull;<br><br>
     <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
     <div style="background-color: black; color: white">Insert</div>
     <textarea style="height: 500px; width: 500px">
-      <insert id="insert_<%=snakeToCamel(table_name)%>" parameterType="Hashmap">
+      <insert id="insert_<%=snakeToCamel(table_name)%>" parameterType="ParamMap">
         INSERT INTO <%=table_name%> (
-        <trim suffixOverrides="," ><% for ( var i = 0; i < data.length; i++){ %><% if(data[i].IS_NULLABLE == 'YES'){%><if test='<%=snakeToCamel(data[i].COLUMN_NAME)%> != null and !<%=snakeToCamel(data[i].COLUMN_NAME)%>.equals("")'><%}%>
+        <trim suffixOverrides="," ><% for ( var i = 0; i < data.length; i++){ %><% if(data[i].IS_NULLABLE == 'YES'){%><if test="<%=snakeToCamel(data[i].COLUMN_NAME)%> != null"><%}%>
             <%=data[i].COLUMN_NAME%>,
           <% if(data[i].IS_NULLABLE == 'YES'){%></if><%}%>
           <% }%></trim>
         ) VALUES (
-        <trim suffixOverrides=","><% for ( var i = 0; i < data.length; i++){ %><% if(data[i].IS_NULLABLE == 'YES'){%><if test='<%=snakeToCamel(data[i].COLUMN_NAME)%> != null and !<%=snakeToCamel(data[i].COLUMN_NAME)%>.equals("")'><%}%>
+        <trim suffixOverrides=","><% for ( var i = 0; i < data.length; i++){ %><% if(data[i].IS_NULLABLE == 'YES'){%><if test="<%=snakeToCamel(data[i].COLUMN_NAME)%> != null"><%}%>
             #{<%=snakeToCamel(data[i].COLUMN_NAME)%>},
           <% if(data[i].IS_NULLABLE == 'YES'){%></if><%}%>
           <% }%></trim>
@@ -100,10 +100,10 @@ import javax.validation.constraints.NotNull;<br><br>
     <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
     <div style="background-color: black; color: white">Update</div>
     <textarea style="height: 500px; width: 500px">
-      <update id="update_<%=snakeToCamel(table_name)%>" parmeterType="Hashmap">
+      <update id="update_<%=snakeToCamel(table_name)%>" parameterType="ParamMap">
         UPDATE <%=table_name%> SET
         <trim suffixOverrides=","><% for ( var i = 0; i < data.length; i++){ %>
-         <% if(data[i].IS_NULLABLE == 'YES'){%> <if test='<%=snakeToCamel(data[i].COLUMN_NAME)%> != null and !<%=snakeToCamel(data[i].COLUMN_NAME)%>.equals("")'><%}%>
+         <% if(data[i].IS_NULLABLE == 'YES'){%> <if test="<%=snakeToCamel(data[i].COLUMN_NAME)%> != null"><%}%>
             <%=data[i].COLUMN_NAME%> = #{<%=snakeToCamel(data[i].COLUMN_NAME)%>},
          <% if(data[i].IS_NULLABLE == 'YES'){%> </if><%}%><% }%>
         </trim>
