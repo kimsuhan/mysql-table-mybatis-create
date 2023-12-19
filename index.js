@@ -2,6 +2,7 @@ import express from "express";
 import path from "path";
 import dotenv from "dotenv";
 import { query } from "./src/config/db.js";
+import jsonwebtoken from "jsonwebtoken";
 
 
 const app = express();
@@ -11,7 +12,13 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "./views"));
 
 app.get("/", (req, res) => {
-  res.redirect("/tables");
+  res.render("index");
+});
+
+app.get("/token", async (req, res) => {
+  const result = await query(`SELECT TABLE_NAME, COLUMN_NAME, COLUMN_COMMENT FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'CRM_DB' ORDER BY TABLE_NAME, ORDINAL_POSITION`);
+
+  res.render("token", {data:result});
 });
 
 app.get("/tables", async (req, res) => {

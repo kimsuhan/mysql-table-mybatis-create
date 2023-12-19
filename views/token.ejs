@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="tableWrapper">
+      <table id="userListTable">
+        <tr>
+          <th> 테이블 네임 </th>
+          <th> 컬럼 네임 </th>
+          <th> 컬럼 설명 </th>
+        </tr>
+        <% for ( var i = 0; i < data.length; i++){ %>
+          <tr style="border: 1px solid black;">
+            <td><%=data[i].TABLE_NAME %></td>
+            <td><%=data[i].COLUMN_NAME %></td>
+            <td><%=data[i].COLUMN_COMMENT %></td>
+          </tr>
+        <% }%>
+      </table>
+
+      <!-- <%=data%> -->
+      asd
+    </div>
+  </body>
+</html>
+
+<style>
+  .tableWrapper {
+    width: 1920px;
+    height: 1080px;
+    overflow: auto;
+    border: 1px solid black;
+}
+
+#userListTable {
+    /* width: 500px; */
+    border: 0px;
+    border-collapse: collapse;
+}
+
+#userListTable th {
+    position: sticky;
+    top: 0px;
+    background-color: gray !important;
+}
+</style>
