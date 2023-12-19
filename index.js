@@ -16,7 +16,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/token", async (req, res) => {
-  const result = await query(`SELECT TABLE_NAME, COLUMN_NAME, COLUMN_COMMENT FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'CRM_DB' ORDER BY TABLE_NAME, ORDINAL_POSITION`);
+  const result = await query(`SELECT TABLE_NAME, COLUMN_NAME, COLUMN_COMMENT FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'CRM_DB' and table_name not like '%_log' ORDER BY TABLE_NAME, ORDINAL_POSITION`);
 
   res.render("token", {data:result});
 });
